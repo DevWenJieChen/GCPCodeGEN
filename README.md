@@ -1,40 +1,40 @@
-# 🌍 OGECodeGEN
+# 🌍 GCPCodeGEN
 
-**OGECodeGEN** is a domain knowledge-grounded geospatial code generation framework for the **Open Geospatial Engine (OGE)** platform. It converts natural-language geospatial analysis requests into OGE Python code by coordinating intent understanding, spatiotemporal datasource acquisition, modeling knowledge retrieval, code generation, platform-level verification, and ReAct-guided feedback correction.
+**GCPCodeGEN** is a domain knowledge-grounded geospatial code generation framework for **customized geospatial computing platforms**. It converts natural-language geospatial analysis requests into target-platform code by coordinating intent understanding, spatiotemporal datasource acquisition, modeling knowledge retrieval, code generation, platform-level verification, and ReAct-guided feedback correction.
 
-The project is designed for research on platform-constrained geospatial code generation, remote-sensing workflow automation, and LLM-assisted programming for less-documented or customized geospatial computing platforms.
+The current implementation instantiates and evaluates the framework on the **Open Geospatial Engine (OGE)** platform. The project is designed for research on platform-constrained geospatial code generation, remote-sensing workflow automation, and LLM-assisted programming for less-documented or privately customized geospatial computing platforms.
 
 ---
 
 ## 📌 Overview
 
-OGECodeGEN addresses a practical challenge in geospatial programming: users often describe an analytical goal in natural language, while the OGE platform requires precise API calls, valid data products, correct operator parameters, and a coherent computational workflow.
+GCPCodeGEN addresses a practical challenge in geospatial programming: users often describe an analytical goal in natural language, while customized geospatial computing platforms require precise API calls, valid data products, correct operator parameters, and coherent computational workflows. In this repository, OGE is used as the representative target platform for implementation and validation.
 
 The framework follows a five-component pipeline coordinated by a ReAct-style feedback mechanism:
 
 1. **Intent Understanding** extracts structured task semantics from the user request.
-2. **Spatiotemporal Datasource Acquisition** selects suitable OGE data products and summarizes data access context.
+2. **Spatiotemporal Datasource Acquisition** selects suitable target-platform data products and summarizes data access context.
 3. **Modeling Knowledge Retrieval** retrieves task-level and operator-level knowledge to support workflow planning and operator selection.
-4. **Code Generation** produces OGE Python code using platform syntax rules and retrieved context.
-5. **Code Verification** checks generated code through platform-oriented validation and DAG-based structural checking.
+4. **Code Generation** produces target-platform code using platform-specific syntax rules and retrieved context. In the current implementation, this corresponds to OGE Python code.
+5. **Code Verification** checks generated code through target-platform-oriented validation and DAG-based structural checking.
 
 When verification fails, the ReAct-style feedback mechanism treats the verification result as an observation, reasons about the failure causes, and triggers actions such as data or knowledge re-retrieval and targeted code revision via the Repair mode.
 
-![overall_architecture_OGECodeGEN.png](images/overall_architecture_OGECodeGEN.png)
-> The overall architecture of the OGECodeGEN
+![overall_architecture_GCPCodeGEN.png](images/overall_architecture_GCPCodeGEN.png)
+> The overall architecture of the GCPCodeGEN
 
-![component_coordination_OGECodeGEN.png](images/component_coordination_OGECodeGEN.png)
-> Component coordination in OGECodeGEN
+![component_coordination_GCPCodeGEN.png](images/component_coordination_GCPCodeGEN.png)
+> Component coordination in GCPCodeGEN
 
 ---
 
 ## 🎬 Demo Examples
 
-The following GIFs provide lightweight previews of OGECodeGEN in typical geospatial code generation scenarios. Full MP4 demo videos with the same filenames are available in the `demo_video/` directory.
+The following GIFs provide lightweight previews of GCPCodeGEN in typical geospatial code generation scenarios. Full MP4 demo videos with the same filenames are available in the `demo_video/` directory.
 
 ### Example 1: Land Surface Temperature Mapping
 
-This example demonstrates how OGECodeGEN generates OGE code for examining land surface thermal conditions in Wuhan using a Landsat 9 image from early March 2023. The task includes extracting the main land surface temperature layer, generating an intuitive temperature distribution map, and displaying relatively hotter and cooler areas.
+This example demonstrates how the OGE-based implementation of GCPCodeGEN generates code for examining land surface thermal conditions in Wuhan using a Landsat 9 image from early March 2023. The task includes extracting the main land surface temperature layer, generating an intuitive temperature distribution map, and displaying relatively hotter and cooler areas.
 
 ![Land Surface Temperature Demo](images/Example_land_surface_temperature.gif)
 
@@ -42,7 +42,7 @@ Full video: [`demo_video/Example_land_surface_temperature.mp4`](demo_video/Examp
 
 ### Example 2: Road and Transportation Facility Extraction from Vector Data
 
-This example shows a vector-based spatial extraction task using user-uploaded road and transportation facility datasets for Wuhan in 2023. OGECodeGEN generates code to construct a specified analysis area, extract roads and transportation facilities within the area, and visualize the analysis area together with the extracted vector features.
+This example shows a vector-based spatial extraction task using user-uploaded road and transportation facility datasets for Wuhan in 2023. GCPCodeGEN generates code to construct a specified analysis area, extract roads and transportation facilities within the area, and visualize the analysis area together with the extracted vector features.
 
 ![Road and Transportation Facility Extraction Demo](images/Example_road_facility_extraction.gif)
 
@@ -58,8 +58,8 @@ Full video: [`demo_video/Example_urban_distribution.mp4`](demo_video/Example_urb
 ## 📂 Repository Structure
 
 ```text
-OGECodeGEN/
-├── data_json/              # Benchmark data, task/operator knowledge, and OGE product metadata
+GCPCodeGEN/
+├── data_json/              # Benchmark data, task/operator knowledge, and target-platform product metadata
 ├── prompts/                # Prompt templates for intent, retrieval, codegen, ReAct, and benchmarks
 ├── script/                 # Scripts for API preprocessing and Milvus knowledge-base upload
 ├── src/
@@ -81,7 +81,7 @@ OGECodeGEN/
 
 ## 🧪 Benchmark Dataset
 
-The evaluation benchmark contains **147 OGE task samples**. Each sample includes a user request, task category, data reference information, reference OGE code, and a reference DAG extracted from the code.
+The evaluation benchmark contains **147 task samples instantiated on OGE**. Each sample includes a user request, task category, data reference information, reference OGE code, and a reference DAG extracted from the code. This OGE-based benchmark is used to validate GCPCodeGEN as a framework for customized geospatial computing platforms.
 
 The benchmark covers five representative categories of geospatial computing tasks and three difficulty levels.
 
@@ -102,22 +102,22 @@ The difficulty level considers the number of core analytical steps, the number o
 
 The benchmark uses both code-level and workflow-level metrics:
 
-| Metric | Description |
-| --- | --- |
-| **Executability** | Verifiable executability based on OGE platform-oriented validation. It is not a full runtime execution success rate. |
-| **NMR** | Node Matching Rate between generated and reference DAGs. |
-| **EMR** | Edge Matching Rate between generated and reference DAGs. |
-| **TSim** | Topological Similarity between generated and reference workflows. |
+| Metric                   | Description                                                  |
+| ------------------------ | ------------------------------------------------------------ |
+| **Executability**        | Verifiable executability based on target-platform-oriented validation. In the released experiments, this is implemented through OGE-oriented validation and is not a full runtime execution success rate. |
+| **NMR**                  | Node Matching Rate between generated and reference DAGs.     |
+| **EMR**                  | Edge Matching Rate between generated and reference DAGs.     |
+| **TSim**                 | Topological Similarity between generated and reference workflows. |
 | **Semantic Correctness** | Task-level semantic quality judged by task fulfillment, data usage, parameter validity, output quality, and result plausibility. |
-| **debugging@k** | Verifiable executability after at most `k` debugging iterations; in the paper setting, debugging@3 equals final Executability. |
+| **debugging@k**          | Verifiable executability after at most `k` debugging iterations; in the paper setting, debugging@3 equals final Executability. |
 
 ---
 
 ## 📈 Main Results
 
-OGECodeGEN is compared with three baselines or ablations:
+GCPCodeGEN is compared with three baselines or ablations:
 
-- **OURS**: the complete OGECodeGEN framework.
+- **OURS**: the complete GCPCodeGEN framework.
 - **woIU**: without the explicit intent-understanding module.
 - **woKR**: without knowledge retrieval.
 - **IOP**: input-output prompting using OGE syntax and I/O specifications only.
@@ -141,6 +141,11 @@ Selected overall results for a subset of evaluated models are shown below. The c
 |               | woKR    |     0.585 |     0.413 |     0.167 |     0.190 |     6.162 |     0.408 |     0.476 |     0.537 |
 |               | IOP     |     0.367 |     0.393 |     0.142 |     0.168 |     5.528 |     0.333 |     0.361 |     0.367 |
 ---
+
+## 🧭 Implementation Scope
+
+GCPCodeGEN is described as a general framework for customized geospatial computing platforms. This repository provides the OGE-based instantiation used in the paper experiments, including OGE product metadata, OGE API-oriented programming rules, OGE code verification, and benchmark references extracted from OGE workflows.
+
 
 ## 🚀 Quick Start
 
@@ -304,11 +309,11 @@ Before releasing this repository, please check the following items:
 
 ## 📖 Citation
 
-If you use OGECodeGEN in academic work, please cite the corresponding paper once it is published.
+If you use GCPCodeGEN in academic work, please cite the corresponding paper once it is published.
 
 ```bibtex
-@article{ogecodegen2026,
-  title   = {OGECodeGEN: a domain knowledge-grounded framework for automatic geospatial code generation on the Open Geospatial Engine},
+@article{GCPCodeGEN2026,
+  title   = {GCPCodeGEN: a domain knowledge-grounded framework for automatic geospatial code generation on the Open Geospatial Engine},
   author  = {Wenjie Chen, Jianyuan Liang*, Longgang Xiang, Huayi Wu},
   journal = {Manuscript under review},
   year    = {2026}
