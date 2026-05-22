@@ -20,10 +20,10 @@ The framework follows a five-component pipeline coordinated by a ReAct-style fee
 
 When verification fails, the ReAct-style feedback mechanism treats the verification result as an observation, reasons about the failure causes, and triggers actions such as data or knowledge re-retrieval and targeted code revision via the Repair mode.
 
-![overall_architecture_GCPCodeGEN.png](images/overall_architecture_GCPCodeGEN.png)
+![overall_architecture_GCPCodeGEN.png](images/Overall_architecture_GCPCodeGEN.png)
 > The overall architecture of the GCPCodeGEN
 
-![component_coordination_GCPCodeGEN.png](images/component_coordination_GCPCodeGEN.png)
+![component_coordination_GCPCodeGEN.png](images/Component_coordination_GCPCodeGEN.png)
 > Component coordination in GCPCodeGEN
 
 ---
